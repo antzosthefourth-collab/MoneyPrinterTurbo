@@ -1,0 +1,52 @@
+# Project config for the generic engine (projects/fitness_shorts/engine.py).
+# Edit this to retune; transcript lives in transcript.md (read verbatim).
+
+task_id: ankle-strength-master
+subject: "Stronger Ankles in 80 Seconds"
+stage_subdir: ankle            # subfolder under storage/local_videos/
+transcript_file: content/transcript.md
+
+voice_name: en-US-AndrewNeural-Male   # any edge-tts voice; fixed = the "character"
+voice_rate: 1.0                # nudge 0.95-1.05 to land near target_seconds
+bgm_type: random
+bgm_volume: 0.12               # keep low so narration dominates
+
+video_clip_duration: 10        # ~one clip per exercise window
+target_seconds: 82
+duration_tolerance: 3          # master passes verify within 82 +/- 3s
+
+# Clip order MUST match the narration order. Files live in assets/clips/.
+clip_order:
+  - 00_hook.mp4
+  - 01_calf_raises.mp4
+  - 02_tibialis_raises.mp4
+  - 03_band_4way.mp4
+  - 04_single_leg_balance.mp4
+  - 05_toe_walks.mp4
+  - 06_heel_walks.mp4
+  - 07_short_foot.mp4
+  - 08_lateral_step_downs.mp4
+
+# Fallback search terms for --source pexels.
+pexels_terms:
+  - calf raise
+  - ankle mobility exercise
+  - resistance band foot
+  - single leg balance
+  - walking on toes
+  - barefoot foot exercise
+  - lateral step down
+
+# Export cuts (contiguous from start, snapped to caption boundaries).
+cuts:
+  - {label: cut-45s, seconds: 45}
+  - {label: hook-15s, seconds: 15}
+
+subtitle:
+  position: bottom
+  custom_position: 70
+  font_name: MicrosoftYaHeiBold.ttc
+  font_size: 60
+  text_fore_color: "#FFFFFF"
+  stroke_color: "#000000"
+  stroke_width: 1.5

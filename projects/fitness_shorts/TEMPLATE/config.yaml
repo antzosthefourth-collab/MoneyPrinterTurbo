@@ -1,0 +1,39 @@
+# Copy this whole TEMPLATE folder to projects/<your-short>/ and edit.
+# Then: python projects/fitness_shorts/run.py projects/<your-short> --verify
+
+task_id: my-short-master       # unique id; outputs go to storage/tasks/<task_id>/
+subject: "My Short Title"
+stage_subdir: my-short         # subfolder under storage/local_videos/
+
+voice_name: en-US-AndrewNeural-Male   # any edge-tts voice (e.g. en-US-AriaNeural-Female)
+voice_rate: 1.0                # 0.95-1.05 to fine-tune length
+bgm_type: random
+bgm_volume: 0.12
+
+video_clip_duration: 10
+target_seconds: 82
+duration_tolerance: 3
+
+# Clip filenames in assets/clips/, in narration order. Missing ones are skipped.
+clip_order:
+  - 00_hook.mp4
+  - 01_move_one.mp4
+  - 02_move_two.mp4
+
+# Used only with --source pexels.
+pexels_terms:
+  - exercise
+  - workout
+
+cuts:
+  - {label: cut-45s, seconds: 45}
+  - {label: hook-15s, seconds: 15}
+
+subtitle:
+  position: bottom
+  custom_position: 70
+  font_name: MicrosoftYaHeiBold.ttc
+  font_size: 60
+  text_fore_color: "#FFFFFF"
+  stroke_color: "#000000"
+  stroke_width: 1.5
