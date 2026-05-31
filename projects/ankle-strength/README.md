@@ -5,6 +5,10 @@ vertical short (1080×1920, 30 fps, ~82s) with voiceover, burned-in captions, an
 music — plus 45s and 15s cuts. It **reuses the MoneyPrinterTurbo pipeline**; it does
 not reimplement TTS, captioning, or FFmpeg.
 
+This is one project of the config-driven `projects/fitness_shorts/` engine — all
+settings live in `config.yaml`, and `build.py` / `verify.py` here are thin wrappers.
+To make a different short, copy `projects/fitness_shorts/TEMPLATE/` (see that README).
+
 The default path needs **no paid API keys** (free edge-tts voice + your own/Pexels
 footage). You run the render on your machine.
 
@@ -56,14 +60,14 @@ python projects/ankle-strength/verify.py
 ```
 Checks duration (~82s), 1080×1920 @ ~30 fps, AAC audio, and that `subtitle.srt` exists.
 
-## Tuning
+## Tuning (all in `config.yaml`)
 - **Length** is driven by the voiceover. If the master isn't ~82s, edit
-  `content/transcript.md` (word count) or nudge `voice_rate` in `build.py` (0.95–1.05).
-- **Alignment**: clips play sequentially; reorder `CLIP_ORDER`/footage and adjust
+  `content/transcript.md` (word count) or nudge `voice_rate` (0.95–1.05).
+- **Alignment**: clips play sequentially; reorder `clip_order`/footage and adjust
   `video_clip_duration` so each exercise roughly fills its window. Frame-exact
   per-segment sync is out of scope for this MVP.
 - **Voice**: change `voice_name` (any edge-tts voice, e.g. `en-US-AriaNeural-Female`).
-- **Cuts**: edit `CUT_SPECS` in `build.py` (they snap to caption boundaries).
+- **Cuts**: edit `cuts` (they snap to caption boundaries).
 - **Custom captions**: the pipeline auto-generates `subtitle.srt`. To force the exact
   wording in `content/captions.srt`, render with `stop_at` left as-is, then replace
   `storage/tasks/ankle-strength-master/subtitle.srt` and re-run the video step. (The
