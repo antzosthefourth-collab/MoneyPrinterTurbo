@@ -152,6 +152,8 @@ def save_config():
         _cfg["app"] = app
         _cfg["azure"] = azure
         _cfg["siliconflow"] = siliconflow
+        _cfg["elevenlabs"] = elevenlabs
+        _cfg["chatterbox"] = chatterbox
         _cfg["ui"] = ui
         f.write(toml.dumps(_cfg))
 
@@ -162,6 +164,8 @@ whisper = _cfg.get("whisper", {})
 proxy = _cfg.get("proxy", {})
 azure = _cfg.get("azure", {})
 siliconflow = _cfg.get("siliconflow", {})
+elevenlabs = _cfg.get("elevenlabs", {})
+chatterbox = _cfg.get("chatterbox", {})
 ui = _cfg.get(
     "ui",
     {
@@ -177,9 +181,10 @@ listen_port = _cfg.get("listen_port", 8080)
 project_name = _cfg.get("project_name", "MoneyPrinterTurbo")
 project_description = _cfg.get(
     "project_description",
-    "<a href='https://github.com/harry0703/MoneyPrinterTurbo'>https://github.com/harry0703/MoneyPrinterTurbo</a>",
+    "<a href='https://github.com/harry0703/MoneyPrinterTurbo'>https://github.com/harry0703/MoneyPrinterTurbo</a>"
+    "<br><small>Supported by <a href='https://aihubmix.com/?aff=CEve'>AIHubMix</a></small>",
 )
-project_version = _cfg.get("project_version", "1.2.9")
+project_version = _cfg.get("project_version", "1.3.0")
 reload_debug = False
 
 app["redis_host"] = os.getenv(

@@ -35,13 +35,13 @@ class VideoAspect(str, Enum):
     square = "1:1"
 
     def to_resolution(self):
-        if self == VideoAspect.landscape.value:
+        if self == VideoAspect.landscape:
             return 1920, 1080
-        elif self == VideoAspect.portrait.value:
+        elif self == VideoAspect.portrait:
             return 1080, 1920
-        elif self == VideoAspect.square.value:
+        elif self == VideoAspect.square:
             return 1080, 1080
-        return 1080, 1920
+        raise ValueError(f"unsupported video aspect: {self}")
 
 
 class _Config:
@@ -77,6 +77,7 @@ class VideoParams(BaseModel):
     video_concat_mode: Optional[VideoConcatMode] = VideoConcatMode.random.value
     video_transition_mode: Optional[VideoTransitionMode] = None
     video_clip_duration: Optional[int] = 5
+    match_materials_to_script: bool = False
     video_count: Optional[int] = 1
 
     video_source: Optional[str] = "pexels"
@@ -167,7 +168,8 @@ class VideoTermsParams:
     {
       "video_subject": "",
       "video_script": "",
-      "amount": 5
+      "amount": 5,
+      "match_materials_to_script": false
     }
     """
 
@@ -176,6 +178,23 @@ class VideoTermsParams:
         "春天的花海，如诗如画般展现在眼前。万物复苏的季节里，大地披上了一袭绚丽多彩的盛装。金黄的迎春、粉嫩的樱花、洁白的梨花、艳丽的郁金香……"
     )
     amount: Optional[int] = 5
+    match_materials_to_script: bool = False
+
+
+class VideoSocialMetadataParams:
+    """
+    {
+      "video_subject": "A day in Shanghai",
+      "video_script": "",
+      "language": "auto",
+      "platform": "tiktok"
+    }
+    """
+
+    video_subject: Optional[str] = Field(default="A day in Shanghai", max_length=500)
+    video_script: Optional[str] = Field(default="", max_length=8000)
+    language: Optional[str] = Field(default="auto", max_length=64)
+    platform: Optional[str] = Field(default="tiktok", max_length=64)
 
 
 class BaseResponse(BaseModel):
@@ -197,6 +216,10 @@ class VideoScriptRequest(VideoScriptParams, BaseModel):
 
 
 class VideoTermsRequest(VideoTermsParams, BaseModel):
+    pass
+
+
+class VideoSocialMetadataRequest(VideoSocialMetadataParams, BaseModel):
     pass
 
 
@@ -280,6 +303,21 @@ class VideoTermsResponse(BaseResponse):
                 "status": 200,
                 "message": "success",
                 "data": {"video_terms": ["sky", "tree"]},
+            },
+        }
+
+
+class VideoSocialMetadataResponse(BaseResponse):
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "status": 200,
+                "message": "success",
+                "data": {
+                    "title": "A Day in Shanghai You Should Not Miss",
+                    "caption": "Save this quick Shanghai inspiration and follow for more short travel ideas.",
+                    "hashtags": ["#shorts", "#travel", "#shanghai", "#viral", "#fyp"],
+                },
             },
         }
 
